@@ -12,13 +12,13 @@
 }
 
 * { box-sizing: border-box; }
-html { background: var(--bg); }
+html, body { height: 100%; overflow: hidden; background: var(--bg); }
 body { margin: 0; color: var(--ink); background: var(--bg); font-family: Cairo, Arial, sans-serif; }
 button, select { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
 
-.shell { width: min(100% - 28px, 520px); margin: auto; padding: 18px 0 26px; }
-.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 19px; }
+.shell { display: flex; flex-direction: column; width: min(100% - 24px, 520px); height: 100svh; margin: auto; padding: 10px 0 9px; }
+.topbar { display: flex; flex: 0 0 40px; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .brand { display: flex; align-items: center; gap: 10px; }
 .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; color: #d6f1e8; background: var(--primary); font-size: 21px; }
 .brand strong, .brand small { display: block; }
@@ -26,62 +26,66 @@ button { -webkit-tap-highlight-color: transparent; }
 .brand small { color: var(--muted); font-size: 10px; }
 .icon-button, .refresh-button { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 13px; color: var(--primary); background: var(--surface); cursor: pointer; }
 
-.hero { position: relative; min-height: 276px; overflow: hidden; padding: 24px 22px; border-radius: 26px; color: #fff; background: var(--primary); box-shadow: 0 16px 30px rgba(7, 61, 54, .18); }
+.hero { position: relative; flex: 0 0 190px; min-height: 190px; overflow: hidden; padding: 17px 18px; border-radius: 22px; color: #fff; background: var(--primary); box-shadow: 0 12px 24px rgba(7, 61, 54, .18); }
 .hero:after { content: ""; position: absolute; width: 260px; height: 260px; left: -125px; bottom: -157px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; }
 .hero-glow { position: absolute; width: 190px; height: 190px; top: -73px; right: -55px; border-radius: 50%; background: rgba(61, 177, 151, .32); filter: blur(30px); }
 .date-line, .location { position: relative; display: flex; align-items: center; gap: 8px; color: #b9d9d1; font-size: 11px; }
 .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 h1 { position: relative; margin: 13px 0 0; font-size: 28px; line-height: 1.35; }
 .timezone { margin-right: 5px; direction: ltr; opacity: .62; font-size: 9px; }
-.current-clock { position: absolute; right: 22px; bottom: 24px; }
+.current-clock { position: absolute; right: 18px; bottom: 18px; }
 .current-clock span, .next-label { display: block; color: #a9cec4; font-size: 10px; }
 .current-clock strong { display: block; direction: ltr; color: #fff; font: 500 23px "DM Mono", monospace; letter-spacing: -1px; }
-.next-prayer { position: absolute; bottom: 22px; left: 22px; direction: rtl; text-align: left; }
+.next-prayer { position: absolute; bottom: 17px; left: 18px; direction: rtl; text-align: left; }
 .next-prayer strong { display: block; margin-top: 2px; font-size: 17px; }
 .countdown { margin: 1px 0; direction: ltr; color: #f4d58e; font: 500 27px "DM Mono", monospace; letter-spacing: -1px; }
 .next-prayer > span:last-child { color: #b9d9d1; font-size: 11px; }
 
 .card { border: 1px solid var(--line); border-radius: 19px; background: var(--surface); box-shadow: var(--shadow); }
-.night-card { margin-top: 12px; padding: 15px; }
+.night-card { flex: 0 0 67px; margin-top: 8px; padding: 9px 12px; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 11px; }
-.section-heading.compact { margin-bottom: 11px; }
+.section-heading.compact { margin-bottom: 6px; }
 .eyebrow { color: #268376; font-size: 10px; font-weight: 700; }
-.section-heading h2 { margin: 0; font-size: 20px; line-height: 1.35; }
-.section-heading.compact h2 { font-size: 17px; }
-.night-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 11px; color: #287e72; background: var(--surface-soft); font-size: 19px; }
+.section-heading h2 { margin: 0; font-size: 17px; line-height: 1.35; }
+.section-heading.compact h2 { font-size: 14px; }
+.night-icon { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 9px; color: #287e72; background: var(--surface-soft); font-size: 16px; }
 .night-times { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.night-times div { padding: 10px 11px; border-radius: 12px; background: var(--surface-soft); }
-.night-times span { display: block; color: var(--muted); font-size: 9px; }
-.night-times strong { display: block; margin-top: 3px; direction: ltr; color: var(--primary); font: 500 17px "DM Mono", monospace; }
-.night-card p { margin: 9px 1px 0; color: var(--muted); font-size: 9px; }
+.night-times div { display: flex; align-items: center; justify-content: space-between; padding: 5px 9px; border-radius: 9px; background: var(--surface-soft); }
+.night-times span { display: block; color: var(--muted); font-size: 8px; }
+.night-times strong { display: block; direction: ltr; color: var(--primary); font: 500 14px "DM Mono", monospace; }
+.night-card p { display: none; }
 
-.controls { display: grid; grid-template-columns: 1fr 1fr 40px; gap: 7px; margin: 12px 0 25px; padding: 10px; }
+.controls { flex: 0 0 53px; display: grid; grid-template-columns: 1fr 1fr 34px; gap: 5px; margin: 8px 0 12px; padding: 7px 9px; }
 .field { min-width: 0; padding: 0 5px; }
 .field span { display: block; margin-bottom: 3px; color: var(--muted); font-size: 9px; }
 .field select { width: 100%; overflow: hidden; padding: 0; border: 0; outline: 0; color: var(--ink); background: transparent; font-size: 12px; font-weight: 700; text-overflow: ellipsis; cursor: pointer; }
-.refresh-button { align-self: end; border-color: transparent; color: var(--primary); background: var(--surface-soft); font-size: 22px; }
+.refresh-button { align-self: center; width: 34px; height: 34px; border-color: transparent; color: var(--primary); background: var(--surface-soft); font-size: 20px; }
 
 .live-badge { padding: 5px 9px; border-radius: 20px; color: #287e72; background: var(--surface-soft); font-size: 9px; }
 .live-badge i { display: inline-block; width: 5px; height: 5px; margin-left: 3px; border-radius: 50%; background: #40ae77; }
-.prayer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
-.prayer-card { position: relative; min-height: 130px; padding: 15px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); transition: .2s ease; }
+.prayer-grid { display: grid; flex: 1; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 7px; min-height: 0; }
+.prayer-card { position: relative; min-height: 0; padding: 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); transition: .2s ease; }
 .prayer-card.active { transform: translateY(-2px); border-color: var(--primary); color: #fff; background: var(--primary); box-shadow: 0 10px 22px rgba(7, 61, 54, .19); }
 .prayer-card.active .prayer-icon, .prayer-card.active .prayer-sub { color: #b3dcd2; }
 .prayer-card.current:before { content: "الآن"; position: absolute; top: 12px; left: 12px; padding: 2px 7px; border-radius: 8px; color: #513b16; background: var(--accent); font-size: 8px; font-weight: 800; }
-.prayer-icon { margin-bottom: 13px; color: #218174; font-size: 20px; line-height: 1; }
-.prayer-card h3 { margin: 0; font-size: 13px; }
+.prayer-icon { margin-bottom: 7px; color: #218174; font-size: 17px; line-height: 1; }
+.prayer-card h3 { margin: 0; font-size: 11px; }
 .prayer-sub { color: var(--muted); font-size: 9px; }
-.prayer-time { margin-top: 12px; direction: ltr; text-align: right; font: 500 20px "DM Mono", monospace; }
-.error-message { min-height: 18px; margin: 11px 2px; color: #ae4c45; font-size: 11px; }
-footer { display: flex; justify-content: space-between; gap: 8px; margin-top: 22px; padding: 0 3px; color: #99aaa5; font-size: 9px; }
+.prayer-time { margin-top: 7px; direction: ltr; text-align: right; font: 500 15px "DM Mono", monospace; }
+.error-message { position: absolute; bottom: 2px; min-height: 0; margin: 0; color: #ae4c45; font-size: 9px; }
+footer { display: none; }
 
 body.dark { --bg: #091514; --surface: #112321; --surface-soft: #173e38; --ink: #e8f1ee; --muted: #9caeaa; --line: #24403b; }
 .dark .icon-button { color: #b9e5d8; background: var(--surface); }
 .dark .night-times div { background: #0d1c1b; }
 
 @media (min-width: 650px) {
-  .shell { width: min(100% - 40px, 900px); }
-  .prayer-grid { grid-template-columns: repeat(6, 1fr); }
+  html, body { overflow: auto; }
+  .shell { width: min(100% - 40px, 900px); height: auto; padding: 22px 0 28px; }
+  .hero { flex-basis: 276px; min-height: 276px; padding: 24px 22px; }
+  .night-card { flex-basis: auto; margin-top: 12px; padding: 15px; }
+  .controls { flex-basis: auto; margin: 12px 0 25px; padding: 10px; }
+  .prayer-grid { flex: none; grid-template-columns: repeat(6, 1fr); grid-template-rows: none; }
   .prayer-card { min-height: 145px; padding: 16px 13px; }
   .prayer-time { font-size: 18px; }
 }
