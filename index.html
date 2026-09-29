@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#091c1b" />
+    <meta name="description" content="مواقيت الصلاة في مدن العراق" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="مواقيت العراق" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="app-icon.svg" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E☪%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=DM+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>مواقيت العراق</title>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">☪</span>
+          <div><strong>مواقيت العراق</strong><small>صلاتك في وقتها</small></div>
+        </div>
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="تبديل المظهر">◐</button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="date-line"><span id="hijri-date">اليوم</span><span class="dot"></span><span id="gregorian-date">—</span></div>
+        <h1 id="city-title">مركز بغداد</h1>
+        <p class="location"><span>⌖</span> <span id="governorate-title">بغداد</span><span class="timezone">Asia/Baghdad</span></p>
+        <div class="next-prayer">
+          <span class="next-label">الصلاة القادمة</span>
+          <strong id="next-name">—</strong>
+          <div class="countdown" id="countdown">--:--:--</div>
+          <span id="next-at">—</span>
+        </div>
+      </section>
+
+      <section class="controls card">
+        <label class="field">
+          <span>المحافظة</span>
+          <select id="governorate-select" aria-label="اختر المحافظة"><option value="">جاري التحميل...</option></select>
+        </label>
+        <label class="field">
+          <span>المدينة</span>
+          <select id="city-select" aria-label="اختر المدينة"><option value="">اختر المدينة</option></select>
+        </label>
+        <button class="refresh-button" id="refresh-button" type="button" aria-label="تحديث المواقيت">↻</button>
+      </section>
+
+      <section class="section-heading">
+        <div><span class="eyebrow">مواقيت اليوم</span><h2>أوقات الصلاة</h2></div>
+        <span class="live-badge"><i></i> مباشر</span>
+      </section>
+      <section class="prayer-grid" id="prayer-grid" aria-live="polite"></section>
+      <p class="error-message" id="error-message" role="alert"></p>
+      <footer><span>البيانات من ديوان الوقف السني</span><span>تحديث تلقائي كل دقيقة</span></footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
