@@ -1,0 +1,1 @@
+{"name":"iraq-prayer-times","version":"1.0.0","private":true,"scripts":{"start":"npx serve .","build":"echo Static PWA ready for Capacitor"},"dependencies":{"@capacitor/android":"^7.4.0","@capacitor/cli":"^7.4.0","@capacitor/core":"^7.4.0"}}
