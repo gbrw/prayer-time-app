@@ -32,12 +32,22 @@
         <div class="date-line"><span id="hijri-date">اليوم</span><span class="dot"></span><span id="gregorian-date">—</span></div>
         <h1 id="city-title">مركز بغداد</h1>
         <p class="location"><span>⌖</span> <span id="governorate-title">بغداد</span><span class="timezone">Asia/Baghdad</span></p>
+        <div class="current-clock"><span>الوقت الحالي</span><strong id="current-time">--:--:--</strong></div>
         <div class="next-prayer">
           <span class="next-label">الصلاة القادمة</span>
           <strong id="next-name">—</strong>
           <div class="countdown" id="countdown">--:--:--</div>
           <span id="next-at">—</span>
         </div>
+      </section>
+
+      <section class="night-card card">
+        <div class="section-heading compact"><div><span class="eyebrow">قيام الليل</span><h2>أوقات الليل</h2></div><span class="night-icon">☾</span></div>
+        <div class="night-times">
+          <div><span>منتصف الليل</span><strong id="midnight-time">—</strong></div>
+          <div><span>بداية الثلث الأخير</span><strong id="last-third-time">—</strong></div>
+        </div>
+        <p>محسوبة من وقت المغرب حتى فجر اليوم التالي</p>
       </section>
 
       <section class="controls card">
@@ -54,7 +64,7 @@
 
       <section class="section-heading">
         <div><span class="eyebrow">مواقيت اليوم</span><h2>أوقات الصلاة</h2></div>
-        <span class="live-badge"><i></i> مباشر</span>
+        <span class="live-badge"><i></i> بتوقيت بغداد</span>
       </section>
       <section class="prayer-grid" id="prayer-grid" aria-live="polite"></section>
       <p class="error-message" id="error-message" role="alert"></p>

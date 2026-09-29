@@ -11,28 +11,52 @@ const state = { city: localStorage.getItem("city") || "baghdad-center", times: n
 const $ = id => document.getElementById(id);
 const formatDate = date => new Intl.DateTimeFormat("ar-IQ", { weekday: "long", day: "numeric", month: "long" }).format(date);
 const toMinutes = time => { const [hours, minutes] = time.split(":").map(Number); return hours * 60 + minutes; };
+const clockParts = () => {
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Baghdad", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).formatToParts(new Date());
+  return Object.fromEntries(parts.filter(part => part.type !== "literal").map(part => [part.type, Number(part.value)]));
+};
+const timeText = minutes => {
+  const rounded = Math.round(minutes) % (24 * 60);
+  return `${String(Math.floor(rounded / 60)).padStart(2, "0")}:${String(rounded % 60).padStart(2, "0")}`;
+};
+function updateCurrentClock() {
+  const parts = clockParts();
+  $("current-time").textContent = [parts.hour, parts.minute, parts.second].map(value => String(value).padStart(2, "0")).join(":");
+  return parts.hour * 60 + parts.minute;
+}
 async function getJson(path) { const response = await fetch(`${API}${path}`); if (!response.ok) throw new Error("تعذر الاتصال بالخدمة"); return response.json(); }
 
 function renderTimes() {
-  const now = new Date();
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const currentMinutes = updateCurrentClock();
   let nextIndex = prayers.findIndex(prayer => toMinutes(state.times[prayer.key]) > currentMinutes);
   if (nextIndex < 0) nextIndex = 0;
+  const currentIndex = prayers.reduce((last, prayer, index) => toMinutes(state.times[prayer.key]) <= currentMinutes ? index : last, -1);
+  const visibleCurrentIndex = currentIndex < 0 ? prayers.length - 1 : currentIndex;
   $("prayer-grid").innerHTML = prayers.map((prayer, index) => `
-    <article class="prayer-card ${index === nextIndex ? "active" : ""} ${index === nextIndex ? "current" : ""}">
+    <article class="prayer-card ${index === visibleCurrentIndex ? "active current" : ""}">
       <div class="prayer-icon">${prayer.icon}</div><h3>${prayer.name}</h3>
       <span class="prayer-sub">${prayer.sub}</span><div class="prayer-time">${state.times[prayer.key]}</div>
     </article>`).join("");
   $("next-name").textContent = prayers[nextIndex].name;
   $("next-at").textContent = state.times[prayers[nextIndex].key];
   updateCountdown(nextIndex);
+  renderNightTimes();
+}
+function renderNightTimes() {
+  const sunset = toMinutes(state.times.maghrib);
+  const nextFajr = toMinutes(state.times.fajr) + 24 * 60;
+  const nightLength = nextFajr - sunset;
+  $("midnight-time").textContent = timeText(sunset + nightLength / 2);
+  $("last-third-time").textContent = timeText(sunset + (nightLength * 2) / 3);
 }
 function updateCountdown(nextIndex) {
   if (!state.times) return;
-  const now = new Date(), [hours, minutes] = state.times[prayers[nextIndex].key].split(":").map(Number);
-  let target = new Date(now); target.setHours(hours, minutes, 0, 0);
-  if (target <= now) target.setDate(target.getDate() + 1);
-  const seconds = Math.max(0, Math.floor((target - now) / 1000));
+  const parts = clockParts();
+  const nowSeconds = parts.hour * 3600 + parts.minute * 60 + parts.second;
+  const [hours, minutes] = state.times[prayers[nextIndex].key].split(":").map(Number);
+  let targetSeconds = hours * 3600 + minutes * 60;
+  if (targetSeconds <= nowSeconds) targetSeconds += 24 * 3600;
+  const seconds = Math.max(0, targetSeconds - nowSeconds);
   $("countdown").textContent = [Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60].map(n => String(n).padStart(2, "0")).join(":");
 }
 function populateSelect(element, items, label = "اختر المدينة") { element.innerHTML = `<option value="">${label}</option>` + items.map(item => `<option value="${item.slug}">${item.name_ar}</option>`).join(""); }
@@ -71,7 +95,7 @@ function setup() {
   $("theme-toggle").addEventListener("click", () => { document.body.classList.toggle("dark"); localStorage.setItem("dark", document.body.classList.contains("dark")); });
   if (localStorage.getItem("dark") === "true") document.body.classList.add("dark");
   loadLocations().then(loadTimes).catch(() => { $("error-message").textContent = "تعذر تحميل المدن. تحقق من اتصال الإنترنت ثم حاول مرة أخرى."; });
-  setInterval(() => state.times && renderTimes(), 60000);
+  setInterval(() => state.times && renderTimes(), 1000);
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 }
 setup();
